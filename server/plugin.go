@@ -383,7 +383,7 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 			for _, fileId := range post.FileIds {
 				info, err := p.API.GetFileInfo(fileId)
 				if err == nil {
-					byteData, err := p.API.ReadFileAtPath(info.Path)
+					byteData, err := p.API.ReadFile(info.Path)
 					if err != nil {
 						return
 					}
