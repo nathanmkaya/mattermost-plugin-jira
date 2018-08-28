@@ -21,11 +21,12 @@ import (
 	"github.com/mattermost/mattermost-server/plugin"
 
 	"bytes"
+
 	jira "github.com/andygrunwald/go-jira"
 	"github.com/dghubble/oauth1"
+	"github.com/google/go-querystring/query"
 	jwt "github.com/rbriski/atlassian-jwt"
 	oauth2 "golang.org/x/oauth2/jira"
-	"github.com/google/go-querystring/query"
 )
 
 const (
@@ -50,6 +51,7 @@ type Plugin struct {
 	securityContext *SecurityContext
 	rsaKey          *rsa.PrivateKey
 	oauth1Config    *oauth1.Config
+	projectKeys     []string
 }
 
 type SecurityContext struct {
@@ -81,7 +83,7 @@ func (p *Plugin) OnActivate() error {
 	p.oauth1Config = &oauth1.Config{
 		ConsumerKey:    "OauthKey",
 		ConsumerSecret: "dont_care",
-		CallbackURL:    *p.API.GetConfig().ServiceSettings.SiteURL + "/plugins/jira/oauth/complete",
+		CallbackURL:    *p.API.GetConfig().ServiceSettings.SiteURL + "/plugins/" + PluginId + "/oauth/complete",
 		Endpoint: oauth1.Endpoint{
 			RequestTokenURL: p.JiraURL + "/plugins/servlet/oauth/request-token",
 			AuthorizeURL:    p.JiraURL + "/plugins/servlet/oauth/authorize",
@@ -89,6 +91,9 @@ func (p *Plugin) OnActivate() error {
 		},
 		Signer: &oauth1.RSASigner{PrivateKey: p.rsaKey},
 	}
+
+	// Temporary hack until we can pull the project keys dynamically
+	p.projectKeys = []string{"MM"}
 
 	return nil
 }
@@ -260,6 +265,16 @@ type CreateIssue struct {
 }
 
 func (p *Plugin) servePublicKey(w http.ResponseWriter, r *http.Request) {
+	userID := r.Header.Get("Mattermost-User-ID")
+	if userID == "" {
+		http.Error(w, "Not authorized", http.StatusUnauthorized)
+		return
+	}
+
+	if !p.API.HasPermissionTo(userID, model.PERMISSION_MANAGE_SYSTEM) {
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
 
 	b, err := x509.MarshalPKIXPublicKey(&p.rsaKey.PublicKey)
 	if err != nil {
@@ -279,6 +294,7 @@ func (p *Plugin) servePublicKey(w http.ResponseWriter, r *http.Request) {
 func (p *Plugin) serveAtlassianConnect(w http.ResponseWriter, r *http.Request) {
 	config := p.API.GetConfig()
 	baseURL := *config.ServiceSettings.SiteURL + "/" + path.Join("plugins", PluginId)
+	fmt.Println(baseURL)
 
 	lp := filepath.Join(*config.PluginSettings.Directory, PluginId, "server", "dist", "templates", "atlassian-connect.json")
 	vals := map[string]string{
@@ -307,6 +323,35 @@ func (p *Plugin) serveInstalled(w http.ResponseWriter, r *http.Request) {
 	p.securityContext = &sc
 
 	p.API.KVSet(KEY_SECURITY_CONTEXT, body)
+
+	// Attempted to auto load the project keys but the jira client was failing for some reason
+	// Need to look into it some more later
+
+	/*if jiraClient, _ := p.getJIRAClientForServer(); jiraClient != nil {
+		fmt.Println("HIT0")
+		req, _ := jiraClient.NewRawRequest(http.MethodGet, "/rest/api/2/project", nil)
+		list1 := jira.ProjectList{}
+		_, err1 := jiraClient.Do(req, &list1)
+		if err1 != nil {
+			fmt.Println(err1.Error())
+		}
+
+		fmt.Println(list1)
+
+		if list, resp, err := jiraClient.Project.GetList(); err == nil {
+			fmt.Println("HIT1")
+			keys := []string{}
+			for _, proj := range *list {
+				keys = append(keys, proj.Key)
+			}
+			p.projectKeys = keys
+			fmt.Println(p.projectKeys)
+		} else {
+			body, _ := ioutil.ReadAll(resp.Body)
+			fmt.Println(string(body))
+			fmt.Println(err.Error())
+		}
+	}*/
 
 	json.NewEncoder(w).Encode([]string{"OK"})
 }
@@ -383,7 +428,7 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 			for _, fileId := range post.FileIds {
 				info, err := p.API.GetFileInfo(fileId)
 				if err == nil {
-					byteData, err := p.API.ReadFileAtPath(info.Path)
+					byteData, err := p.API.ReadFile(info.Path)
 					if err != nil {
 						return
 					}
@@ -395,10 +440,10 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 
 	// Reply to the post with the issue link that was created
 	reply := &model.Post{
-		Message: fmt.Sprintf("Created a Jira issue %v/browse/%v", p.securityContext.BaseURL, created.Key),
+		Message:   fmt.Sprintf("Created a Jira issue %v/browse/%v", p.securityContext.BaseURL, created.Key),
 		ChannelId: post.ChannelId,
-		RootId: cr.PostId,
-		UserId: userID,
+		RootId:    cr.PostId,
+		UserId:    userID,
 	}
 	p.API.CreatePost(reply)
 
@@ -711,7 +756,8 @@ func (p *Plugin) handleCommentMentions(w *Webhook) {
 }
 
 func (p *Plugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
-	issues := parseJiraIssueFromText(post.Message)
+	issues := parseJiraIssueFromText(post.Message, p.projectKeys)
+	fmt.Println(issues)
 	if len(issues) == 0 {
 		return
 	}
@@ -731,6 +777,10 @@ func (p *Plugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
 
 	team, _ := p.API.GetTeam(channel.TeamId)
 	if team == nil {
+		return
+	}
+
+	if !team.AllowOpenInvite {
 		return
 	}
 

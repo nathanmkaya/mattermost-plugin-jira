@@ -54,7 +54,7 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 			return getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, "Encountered an error connecting to JIRA."), nil
 		}
 
-		resp := getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, fmt.Sprintf("[Click here to link your JIRA account.](%s/plugins/jira/oauth/connect)", *config.ServiceSettings.SiteURL))
+		resp := getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, fmt.Sprintf("[Click here to link your JIRA account.](%s/plugins/%s/oauth/connect)", *config.ServiceSettings.SiteURL, PluginId))
 		return resp, nil
 	}
 

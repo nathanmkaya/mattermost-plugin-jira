@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/url"
 	"regexp"
 )
@@ -22,15 +23,17 @@ func parseJiraUsernamesFromText(text string) []string {
 	return usernames
 }
 
-func parseJiraIssueFromText(text string) []string {
+func parseJiraIssueFromText(text string, keys []string) []string {
 	issueMap := map[string]bool{}
 	issues := []string{}
 
-	var re = regexp.MustCompile(`(?m)PLUG-[0-9]+`)
-	for _, match := range re.FindAllString(text, -1) {
-		if !issueMap[match] {
-			issues = append(issues, match)
-			issueMap[match] = true
+	for _, key := range keys {
+		var re = regexp.MustCompile(fmt.Sprintf(`(?m)%s-[0-9]+`, key))
+		for _, match := range re.FindAllString(text, -1) {
+			if !issueMap[match] {
+				issues = append(issues, match)
+				issueMap[match] = true
+			}
 		}
 	}
 

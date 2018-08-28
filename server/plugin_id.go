@@ -1,3 +1,3 @@
 package main
 
-const PluginId = "jira"
+const PluginId = "jira2"
