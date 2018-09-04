@@ -4,12 +4,15 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
+import PluginId from 'plugin_id';
+
 export default class CreateIssuePostMenuAction extends PureComponent {
     static propTypes = {
         isSystemMessage: PropTypes.bool,
         locale: PropTypes.string,
         open: PropTypes.func.isRequired,
         postId: PropTypes.string,
+        connected: PropTypes.object.isRequired,
     };
 
     static defaultTypes = {
@@ -29,19 +32,23 @@ export default class CreateIssuePostMenuAction extends PureComponent {
     handleClick = (e) => {
         const {open, postId} = this.props;
         e.preventDefault();
-        console.log('opening modal for ', postId);
         open(postId);
     };
+
+    connectClick = () => {
+        window.open('/plugins/' + PluginId + '/oauth/connect');
+    }
 
     render() {
         if (this.props.isSystemMessage) {
             return null;
         }
 
-        return (
-            <li
-                role='presentation'
-            >
+        const conn = this.props.connected || {};
+
+        let content;
+        if (conn.connected) {
+            content = (
                 <button
                     className='style--none'
                     role='menuitem'
@@ -49,6 +56,24 @@ export default class CreateIssuePostMenuAction extends PureComponent {
                 >
                     {this.getLocalizedTitle()}
                 </button>
+            );
+        } else {
+            content = (
+                <button
+                    className='style--none'
+                    role='menuitem'
+                    onClick={this.connectClick}
+                >
+                    {'Connect to JIRA'}
+                </button>
+            );
+        }
+
+        return (
+            <li
+                role='presentation'
+            >
+                {content}
             </li>
         );
     }

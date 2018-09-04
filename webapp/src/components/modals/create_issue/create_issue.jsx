@@ -12,16 +12,16 @@ import Loading from 'components/loading';
 import MultiSelect from 'components/settings/multiselect';
 
 const initialState = {
-    submitting:false,
+    submitting: false,
     metadata: null,
     fields: {
         description: '',
         project: {
-            key: ''
+            key: '',
         },
         issuetype: {
-            name: ''
-        }
+            name: '',
+        },
     },
     error: null,
 };
@@ -66,13 +66,13 @@ export default class CreateIssueModal extends PureComponent {
             if (meta.data && meta.data.projects && meta.data.projects.length) {
                 const pr = meta.data.projects[0];
                 nFields.project.key = pr.key;
-                nFields.issuetype.name = pr.issuetypes[0].name
+                nFields.issuetype.name = pr.issuetypes[0].name;
             }
             this.setState({
                 metadata: meta.data,
                 fields: nFields,
             });
-        })
+        });
     };
 
     getProjectMeta = (projectKey) => {
@@ -128,7 +128,7 @@ export default class CreateIssueModal extends PureComponent {
                 return;
             }
             this.handleClose(e);
-        })
+        });
     };
 
     handleClose = (e) => {
@@ -152,13 +152,13 @@ export default class CreateIssueModal extends PureComponent {
 
     handleSettingChange = (id, value) => {
         const {description, project} = this.state.fields;
-        switch(id) {
+        switch (id) {
         case 'selectProject': {
             const fields = {
                 description,
                 project: {
                     key: value,
-                }
+                },
             };
             const issueTypes = this.getProjectIssueTypes(value);
             fields.issuetype = {
@@ -203,7 +203,7 @@ export default class CreateIssueModal extends PureComponent {
                         onChange={this.handleSettingChange}
                         required={f.required}
                     />
-                )
+                );
             }
 
             if (f.schema.type === 'string') {
@@ -223,7 +223,7 @@ export default class CreateIssueModal extends PureComponent {
             if (f.hasDefaultValue && !fields[f.key]) {
                 value = f.defaultValue && f.defaultValue.name;
             } else {
-                value = fields[f.key]
+                value = fields[f.key];
             }
 
             if (f.allowedValues && f.allowedValues.length) {
@@ -261,7 +261,7 @@ export default class CreateIssueModal extends PureComponent {
         }
 
         if (!post || !metadata || !fields.project.key) {
-            component =  <Loading/>;
+            component = <Loading/>;
         } else {
             const projectsOption = (
                 <DropDown
@@ -341,6 +341,6 @@ const getStyle = (theme) => ({
     descriptionArea: {
         height: 'auto',
         width: '100%',
-        color: '#000'
+        color: '#000',
     },
 });

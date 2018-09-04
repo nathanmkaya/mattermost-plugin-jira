@@ -7,8 +7,11 @@ import {bindActionCreators} from 'redux';
 import {getPost} from 'mattermost-redux/selectors/entities/posts';
 import {isSystemMessage} from 'mattermost-redux/utils/post_utils';
 
-import {openCreateModal} from 'actions/create_issue';
+import {openCreateModal} from 'actions';
+
 import {getCurrentUserLocale} from 'selectors';
+
+import PluginId from 'plugin_id';
 
 import CreateIssuePostMenuAction from './create_issue';
 
@@ -17,7 +20,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         locale: getCurrentUserLocale(state),
         isSystemMessage: isSystemMessage(post),
-    }
+        connected: state[`plugins-${PluginId}`],
+    };
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

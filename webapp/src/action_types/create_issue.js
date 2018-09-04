@@ -6,4 +6,5 @@ import PluginId from 'plugin_id';
 export default {
     CLOSE_CREATE_MODAL: `${PluginId}_close_create_modal`,
     OPEN_CREATE_MODAL: `${PluginId}_open_create_modal`,
-}
+    RECEIVED_CONNECTED: `${PluginId}_connected`,
+};

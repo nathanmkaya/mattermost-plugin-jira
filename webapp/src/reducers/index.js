@@ -5,6 +5,15 @@ import {combineReducers} from 'redux';
 
 import {CreateTypes} from 'action_types';
 
+function connected(state = false, action) {
+    switch (action.type) {
+    case CreateTypes.RECEIVED_CONNECTED:
+        return action.data.connected;
+    default:
+        return state;
+    }
+}
+
 const createModalVisible = (state = false, action) => {
     switch (action.type) {
     case CreateTypes.OPEN_CREATE_MODAL:
@@ -28,6 +37,7 @@ const createModalForPostId = (state = '', action) => {
 };
 
 export default combineReducers({
+    connected,
     createModalVisible,
-    createModalForPostId
+    createModalForPostId,
 });

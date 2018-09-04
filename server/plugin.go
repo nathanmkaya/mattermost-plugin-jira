@@ -37,6 +37,7 @@ const (
 	KEY_JIRA_USER_TO_MM_USERID = "jira_user_"
 	KEY_RSA                    = "rsa_key"
 	KEY_OAUTH1_REQUEST         = "oauth1_request_"
+	WS_EVENT_CONNECT           = "connect"
 )
 
 type Plugin struct {
@@ -155,9 +156,39 @@ func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Req
 	case "/create-issue-metadata":
 		p.serveCreateIssueMetadata(w, r)
 		return
+	case "/api/v1/connected":
+		p.getConnected(w, r)
+		return
 	}
 
 	http.NotFound(w, r)
+}
+
+type ConnectedResponse struct {
+	Connected     bool   `json:"connected"`
+	JiraUsername  string `json:"jira_username"`
+	JiraAccountId string `json:"jira_account_id"`
+	JiraURL       string `json:"jira_url"`
+}
+
+func (p *Plugin) getConnected(w http.ResponseWriter, r *http.Request) {
+	userID := r.Header.Get("Mattermost-User-ID")
+	if userID == "" {
+		http.Error(w, "Not authorized", http.StatusUnauthorized)
+		return
+	}
+
+	resp := &ConnectedResponse{Connected: false, JiraURL: p.JiraURL}
+
+	info, _ := p.getJiraUserInfo(userID)
+	if info != nil {
+		resp.Connected = true
+		resp.JiraUsername = info.Name
+		resp.JiraAccountId = info.AccountId
+	}
+
+	b, _ := json.Marshal(resp)
+	w.Write(b)
 }
 
 func (p *Plugin) serveOAuthRequest(w http.ResponseWriter, r *http.Request) {
@@ -236,6 +267,17 @@ func (p *Plugin) serveOAuthComplete(w http.ResponseWriter, r *http.Request) {
 	p.API.KVSet(KEY_USER_INFO+userID, b)
 	p.API.KVSet(KEY_JIRA_USER_TO_MM_USERID+info.Name, []byte(userID))
 
+	p.API.PublishWebSocketEvent(
+		WS_EVENT_CONNECT,
+		map[string]interface{}{
+			"connected":       true,
+			"jira_username":   info.Name,
+			"jira_account_id": info.AccountId,
+			"jira_url":        p.JiraURL,
+		},
+		&model.WebsocketBroadcast{UserId: userID},
+	)
+
 	html := `
 <!DOCTYPE html>
 <html>
@@ -245,7 +287,7 @@ func (p *Plugin) serveOAuthComplete(w http.ResponseWriter, r *http.Request) {
 		</script>
 	</head>
 	<body>
-		<p>Completed connecting to JIRA.</p>
+		<p>Completed connecting to JIRA. Please close this page.</p>
 	</body>
 </html>
 `
