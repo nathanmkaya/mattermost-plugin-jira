@@ -406,7 +406,9 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 	var cr *CreateIssue
 	err := json.NewDecoder(r.Body).Decode(&cr)
 	if err != nil {
+		fmt.Println(err.Error())
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	userID := r.Header.Get("Mattermost-User-ID")
@@ -417,12 +419,16 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 
 	info, err := p.getJiraUserInfo(userID)
 	if err != nil {
+		fmt.Println(err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	jiraClient, _, err := p.getJIRAClientForUser(info.AccountId)
 	if err != nil {
+		fmt.Println(err.Error())
 		http.Error(w, "could not get jira client, err="+err.Error(), 500)
+		return
 	}
 
 	// Lets add a permalink to the post in the Jira Description
@@ -452,7 +458,9 @@ func (p *Plugin) serveCreateIssue(w http.ResponseWriter, r *http.Request) {
 
 	created, _, err := jiraClient.Issue.Create(issue)
 	if err != nil {
+		fmt.Println(err.Error())
 		http.Error(w, "could not create the issue on Jira, err="+err.Error(), 500)
+		return
 	}
 
 	// In case the post message is different than the description
