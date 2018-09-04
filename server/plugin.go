@@ -336,7 +336,6 @@ func (p *Plugin) servePublicKey(w http.ResponseWriter, r *http.Request) {
 func (p *Plugin) serveAtlassianConnect(w http.ResponseWriter, r *http.Request) {
 	config := p.API.GetConfig()
 	baseURL := *config.ServiceSettings.SiteURL + "/" + path.Join("plugins", PluginId)
-	fmt.Println(baseURL)
 
 	lp := filepath.Join(*config.PluginSettings.Directory, PluginId, "server", "dist", "templates", "atlassian-connect.json")
 	vals := map[string]string{
@@ -799,7 +798,6 @@ func (p *Plugin) handleCommentMentions(w *Webhook) {
 
 func (p *Plugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
 	issues := parseJiraIssueFromText(post.Message, p.projectKeys)
-	fmt.Println(issues)
 	if len(issues) == 0 {
 		return
 	}
