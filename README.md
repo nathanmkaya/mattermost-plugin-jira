@@ -9,7 +9,7 @@ This plugin supports Jira Core and Jira Software products, for Server, Data Cent
 
 Support for multiple Jira instances is considered, but not yet supported.
 
-## Table of Contents
+## Table of Contents!
 
  - [1. Features](#1-features)
  - [2. Configuration](#2-configuration)
