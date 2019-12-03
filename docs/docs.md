@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/circleci/project/github/mattermost/mattermost-plugin-jira/master.svg)](https://circleci.com/gh/mattermost/mattermost-plugin-jira) [![Code Coverage](https://img.shields.io/codecov/c/github/mattermost/mattermost-plugin-jira/master.svg)](https://codecov.io/gh/mattermost/mattermost-plugin-jira)
 
-This plugin supports a two-way integration between Mattermost and Jira. For a stable production release, please download the latest version [in the Releases tab](https://github.com/mattermost/mattermost-plugin-jira/releases) and follow [these instructions](./#2-configuration) for install and configuration.  Check the plugin Marketplace.
+This plugin supports a two-way integration between Mattermost and Jira. For a stable production release, please download the latest version [in the Releases tab](https://github.com/mattermost/mattermost-plugin-jira/releases) and follow [these instructions](docs.md#2-configuration) for install and configuration.
 
 This plugin supports Jira Core and Jira Software products, for Server, Data Center and Cloud platforms. It has been tested with versions 7 and 8.
 
@@ -10,13 +10,13 @@ Support for multiple Jira instances is considered, but not yet supported.
 
 ## Table of Contents
 
-* [1. Features](./#1-features)
-* [2. Configuration](./#2-configuration)
-* [3. Jira v2 Roadmap](./#3-jira-v2-roadmap)
-* [4. Development](./#4-development)
-* [5. Frequently Asked Questions \(FAQ\)](./#5-frequently-asked-questions-faq)
-* [6. Troubleshooting](./#6-Troubleshooting)
-* [7. Help](./#7-Help)
+* [1. Features](docs.md#1-features)
+* [2. Configuration](docs.md#2-configuration)
+* [3. Jira v2 Roadmap](docs.md#3-jira-v2-roadmap)
+* [4. Development](docs.md#4-development)
+* [5. Frequently Asked Questions \(FAQ\)](docs.md#5-frequently-asked-questions-faq)
+* [6. Troubleshooting](docs.md#6-Troubleshooting)
+* [7. Help](docs.md#7-Help)
 
 ### Requirements
 
@@ -33,7 +33,7 @@ Notify your team of the latest updates by sending notifications from your Jira p
 
 ![image](https://user-images.githubusercontent.com/13119842/59113138-7f51e180-8912-11e9-9fc5-3077ba90a8a8.png)
 
-Notifications are configured with webhooks and offer full JQL support. Configuration is restricted to Jira System Admins only. See [these instructions](./#2-configuration) for install and configuration.
+Notifications are configured with webhooks and offer full JQL support. Configuration is restricted to Jira System Admins only. See [these instructions](docs.md#2-configuration) for install and configuration.
 
 The following Jira event notifications are supported:
 
@@ -154,9 +154,9 @@ then hit **Save**.
 
 #### Step 3: Install the plugin as an application in Jira
 
-If you want to allow users to [create and manage Jira issues across Mattermost channels](./#11-create-and-manage-jira-issues-in-mattermost), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
+If you want to allow users to [create and manage Jira issues across Mattermost channels](docs.md#11-create-and-manage-jira-issues-in-mattermost), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
 
-If you face issues installing the plugin, see our [Frequently Asked Questions](./#5-frequently-asked-questions-faq) for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
+If you face issues installing the plugin, see our [Frequently Asked Questions](docs.md#5-frequently-asked-questions-faq) for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
 
 ## 3. Jira v2 Roadmap
 
