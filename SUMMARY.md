@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Mattermost Jira Plugin](README.md)
+* [Mattermost Jira](README.md)
 * [Mattermost Jira Integration](docs/README.md)
   * [Feature Summary](docs/untitled.md)
 
