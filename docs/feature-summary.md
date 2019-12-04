@@ -14,6 +14,8 @@ Notify your team of the latest updates by sending notifications from your Jira p
 
 Each user in Mattermost is connected with their own personal Jira account and notifications for issues where someone is mentioned or assigned an issue is mentioned in your own personal jira notification bot to help everyone stay on top of their assigned issues.
 
+![A personal JiraBot helps keep you on top of your relevant Jira activities](.gitbook/assets/image%20%287%29.png)
+
 ## Manage Jira issues in Mattermost
 
 ### Create Jira issues
