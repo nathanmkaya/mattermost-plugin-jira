@@ -1,10 +1,10 @@
 # Feature Summary
 
-## Features
+## Jira to Mattermost Notifications 
 
-### Send notifications from Jira to Mattermost
+### Channel Subscriptions
 
-Notify your team of the latest updates by sending notifications from your Jira projects to Mattermost channels.
+Notify your team of the latest updates by sending notifications from your Jira projects to Mattermost channels.  You can specify which events trigger a notification - and you can filter out certain types of notifications to keep down the noise. 
 
 ![image](https://user-images.githubusercontent.com/13119842/59113100-6cd7a800-8912-11e9-9e23-3639c0eb9c4d.png)
 
@@ -21,11 +21,15 @@ The following Jira event notifications are supported:
 
 If you’d like to see support for additional events, [let us know](https://mattermost.uservoice.com/forums/306457-general).
 
-### 1.2 Create and manage Jira issues in Mattermost
+### Personal Notifications: JiraBot
+
+Each user in Mattermost is connected with their own personal Jira account and notifications for issues where someone is mentioned or assigned an issue is mentioned in your own personal jira notification bot to help everyone stay on top of their assigned issues. 
+
+## Manage Jira issues in Mattermost
 
 Connect your Mattermost account to Jira via `/jira connect` command, then create and manage issues across Mattermost channels. You can disconnect your account anytime via `/jira disconnect`.
 
-#### 1.2.1 Create Jira issues
+### Create Jira issues
 
 Create Jira issues from a Mattermost message by clicking the **More Actions** \(...\) option of any message in the channel \(available when you hover over a message\), then selecting **Create Jira Issue**.
 
@@ -46,7 +50,7 @@ The supported Jira fields are:
 * **Multi-Line Text**: Custom fields, and built-in fields such as **Description**.
 * **Single-Choice Issue**: Custom fields, and built-in fields such as **Issue Type** and **Priority**. 
 
-#### 1.2.2 Attach Messages to Jira Issues
+### Attach Messages to Jira Issues
 
 Keep all information in one place by attaching parts of Mattermost conversations in Jira issues as comments. To attach a message, click the **More Actions** \(...\) option of any message in the channel \(available when you hover over a message\), then select **Attach to Jira Issue**.
 
@@ -56,7 +60,7 @@ Then, on the resulting dialog, select the issue you want to attach it to. You ma
 
 Click **Attach** and the message is attached to the selected Jira issue as a comment.
 
-#### 1.2.3 Transition Jira issues
+### Transition Jira issues
 
 Transition issues without the need to switch to your Jira project. To transition an issue, use the `/jira transition <issue-key> <state>` command.
 
@@ -69,7 +73,7 @@ Note
 * States and issue transitions are based on your Jira project workflow configuration. If an invalid state is entered, an ephemeral message is returned mentioning that the state couldn't be found.
 * Partial Matches work.  For example, typing `/jira transition EXT-20 in`  will transition to "In Progress".  However, if there are states of "In Review, In Progress", the plugin bot will ask you to be more specific and display the partial matches.
 
-#### 1.2.4 Assign Jira issues
+### Assign Jira issues
 
 Assign issues to other Jira users without the need to switch to your Jira project. To assign an issue, use the /jira assign  .
 

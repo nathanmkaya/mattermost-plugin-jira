@@ -1,8 +1,7 @@
 # Table of contents
 
-* [Mattermost Jira](README.md)
-* [Mattermost Jira Integration](docs/README.md)
-  * [Feature Summary](docs/untitled.md)
+* [Mattermost/Jira Integration](README.md)
+* [Feature Summary](feature-summary.md)
 
 ## Setup
 
