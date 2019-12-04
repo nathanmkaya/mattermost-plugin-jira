@@ -1,6 +1,11 @@
-# Troubleshooting
+---
+description: >-
+  If you encounter issues, please try out some of these troubleshooting steps
+  and share the results with your support staff or the community to provide
+  better diagnoses of problems.
+---
 
-## 6. Troubleshooting
+# Troubleshooting
 
 **Note**: If you experience problems with Jira-related user interactions in Mattermost such as creating issues, disable these features by setting **Allow users to connect their Mattermost accounts to Jira** to false in **System Console &gt; Plugins &gt; Jira**. This setting does not affect Jira webhook notifications. After changing this setting to false, disable, then re-enable this plugin in **System Console &gt; Plugins &gt; Plugin Management** to reset the plugin state for all users.
 

@@ -1,12 +1,13 @@
 # Configuration
 
-## 2. Configuration
-
 ### Step 1: Configure plugin in Mattermost
 
-1. Go to **System Console &gt; Plugins &gt; Jira**, select the username that this plugin is attached to, generate a **Secret** and hit **Save**.
-   * You may optionally create a new user account for your Jira plugin, which acts as a bot account posting Jira updates to Mattermost channels.
-2. Go to **System Console &gt; Plugins &gt; Management** and click **Enable** to enable the Jira plugin.
+1. Go to **Plugins Marketplace &gt; Jira**
+   1. Click the **Configure** button
+   2. Generate a **Secret** for `Webhook Secret` and `Stats API Secret`
+   3. Optionally change settings for Notifications permissions and Issue Creation capabilities
+   4. Click **Save**.
+2. Go to the top of the screen and set **Enable Plugin** to `True`and then click **Save** to enable the Jira plugin.
 
 ### Step 2: Configure webhooks in Jira
 
@@ -14,7 +15,11 @@ As of Jira 2.1, you need to configure a single webhook for all possible event tr
 
 Previously configured webhooks that point to specific channels are still supported and will continue to work.
 
-To control Mattermost channel subscriptions, use the command `/jira subscribe` in the channel in which you want to receive subscriptions. It will open a new modal window to select the project and event triggers that will post to the channel.
+{% hint style="info" %}
+To control Mattermost channel subscriptions, use the command `/jira subscribe` in the channel in which you want to receive subscriptions. It will open a new modal window to select the project and event triggers that will post to the channel.  To manage all channel subscriptions as an administrator see [Notification Management](../admininstrator-guide/notification-management.md)
+{% endhint %}
+
+
 
 1. As a Jira System Administrator, go to **Jira Settings &gt; System &gt; WebHooks**.
    * For older versions of Jira, click the gear icon in bottom left corner, then go to **Advanced &gt; WebHooks**.
@@ -52,7 +57,7 @@ then hit **Save**.
 
 ### Step 3: Install the plugin as an application in Jira
 
-If you want to allow users to [create and manage Jira issues across Mattermost channels](configuration.md), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
+If you want to allow users to [create and manage Jira issues across Mattermost channels](../end-user-guide/using-jira-commands.md), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
 
-If you face issues installing the plugin, see our [Frequently Asked Questions](configuration.md) for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
+If you face issues installing the plugin, see our [Frequently Asked Questions]() for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
 
