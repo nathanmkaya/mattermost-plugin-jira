@@ -1,6 +1,6 @@
 # Mattermost/Jira Integration
 
-For Documentation please visit: https://mattermost.gitbook.io/jira-plugin/
+Documentation is being moved to a new location on an experimental basis - please visit: https://mattermost.gitbook.io/jira-plugin/ - let us know your thoughts on the new format!
 
 # Mattermost Jira Plugin
 
