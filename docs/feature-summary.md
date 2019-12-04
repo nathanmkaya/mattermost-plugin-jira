@@ -1,16 +1,16 @@
 # Feature Summary
 
-## Jira to Mattermost Notifications 
+## Jira to Mattermost Notifications
 
 ### Channel Subscriptions
 
-Notify your team of the latest updates by sending notifications from your Jira projects to Mattermost channels.  You can specify which events trigger a notification - and you can filter out certain types of notifications to keep down the noise. 
+Notify your team of the latest updates by sending notifications from your Jira projects to Mattermost channels. You can specify which events trigger a notification - and you can filter out certain types of notifications to keep down the noise.
 
 ![image](https://user-images.githubusercontent.com/13119842/59113100-6cd7a800-8912-11e9-9e23-3639c0eb9c4d.png)
 
 ![image](https://user-images.githubusercontent.com/13119842/59113138-7f51e180-8912-11e9-9fc5-3077ba90a8a8.png)
 
-Notifications are configured with webhooks and offer full JQL support. Configuration is restricted to Jira System Admins only. See [these instructions]() for install and configuration.
+Notifications are configured with webhooks and offer full JQL support. Configuration is restricted to Jira System Admins only. See [these instructions](feature-summary.md) for install and configuration.
 
 The following Jira event notifications are supported:
 
@@ -23,7 +23,7 @@ If you’d like to see support for additional events, [let us know](https://matt
 
 ### Personal Notifications: JiraBot
 
-Each user in Mattermost is connected with their own personal Jira account and notifications for issues where someone is mentioned or assigned an issue is mentioned in your own personal jira notification bot to help everyone stay on top of their assigned issues. 
+Each user in Mattermost is connected with their own personal Jira account and notifications for issues where someone is mentioned or assigned an issue is mentioned in your own personal jira notification bot to help everyone stay on top of their assigned issues.
 
 ## Manage Jira issues in Mattermost
 
@@ -75,7 +75,7 @@ Note
 
 ### Assign Jira issues
 
-Assign issues to other Jira users without the need to switch to your Jira project. To assign an issue, use the /jira assign  .
+Assign issues to other Jira users without the need to switch to your Jira project. To assign an issue, use the /jira assign .
 
 For instance, `/jira assign EXT-20 john` transitions the issue key **EXT-20** to **John**.
 

@@ -18,10 +18,10 @@
 
 * [Getting Started](end-user-guide/getting-started.md)
 * [FAQ](end-user-guide/faq.md)
+* [Help and Support](help-and-support.md)
 
 ## Development
 
 * [Environment](development/environment.md)
 * [Help Wanted!](development/help-wanted.md)
-* [Help and Support](help-and-support.md)
 

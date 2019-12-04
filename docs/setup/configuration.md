@@ -2,13 +2,13 @@
 
 ## 2. Configuration
 
-#### Step 1: Configure plugin in Mattermost
+### Step 1: Configure plugin in Mattermost
 
 1. Go to **System Console &gt; Plugins &gt; Jira**, select the username that this plugin is attached to, generate a **Secret** and hit **Save**.
    * You may optionally create a new user account for your Jira plugin, which acts as a bot account posting Jira updates to Mattermost channels.
 2. Go to **System Console &gt; Plugins &gt; Management** and click **Enable** to enable the Jira plugin.
 
-#### Step 2: Configure webhooks in Jira
+### Step 2: Configure webhooks in Jira
 
 As of Jira 2.1, you need to configure a single webhook for all possible event triggers that you would like to be pushed into Mattermost. This is called a firehose, and the plugin gets sent a stream of events from the jira server via the webhook configured below. The plugin's new Channel Subscription feature processes the firehose of data and then routes the events to particular channels based on your subscriptions.
 
@@ -50,11 +50,9 @@ To control Mattermost channel subscriptions, use the command `/jira subscribe` i
 
 then hit **Save**.
 
-#### Step 3: Install the plugin as an application in Jira
+### Step 3: Install the plugin as an application in Jira
 
-If you want to allow users to [create and manage Jira issues across Mattermost channels](), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
+If you want to allow users to [create and manage Jira issues across Mattermost channels](configuration.md), install the plugin as an application in your Jira instance. For Jira Server or Data Center instances, post `/jira install server <your-jira-url>` to a Mattermost channel as a Mattermost System Admin, and follow the steps posted to the channel. For Jira Cloud, post `/jira install cloud <your-jira-url>`.
 
-If you face issues installing the plugin, see our [Frequently Asked Questions]() for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
-
-## 
+If you face issues installing the plugin, see our [Frequently Asked Questions](configuration.md) for troubleshooting help, or open an issue in the [Mattermost Forum](http://forum.mattermost.org).
 
