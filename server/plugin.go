@@ -509,7 +509,7 @@ func (p *Plugin) AddAutolinksForCloudInstance(ci *cloudInstance) error {
 		return fmt.Errorf("unable to get project keys: %w", err)
 	}
 
-	return p.AddAutoLinkForProjects(plist, ci.BaseURL)
+	return p.AddAutoLinkForProjects(plist, ci.GetJiraBaseURL())
 }
 
 func (p *Plugin) AddAutolinksForCloudOAuthInstance(coi *cloudOAuthInstance) error {
@@ -518,7 +518,7 @@ func (p *Plugin) AddAutolinksForCloudOAuthInstance(coi *cloudOAuthInstance) erro
 		return fmt.Errorf("error getting project list: %w", err)
 	}
 
-	return p.AddAutoLinkForProjects(*plist, coi.JiraBaseURL)
+	return p.AddAutoLinkForProjects(*plist, coi.GetJiraBaseURL())
 }
 
 func (p *Plugin) AddAutoLinkForProjects(plist jira.ProjectList, baseURL string) error {
